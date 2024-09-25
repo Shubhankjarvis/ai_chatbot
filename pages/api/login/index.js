@@ -1,20 +1,16 @@
 import UserModel from '../../../models/user';
-
 const bcrypt = require('bcrypt');
 const { DataTypes } = require('sequelize');
 const db = require('../../../models/index');
-const jwt = require('jsonwebtoken');
-
+const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
 const sequelize = db.sequelize;
 const User = UserModel(sequelize, DataTypes);
 
-const JWT_SECRET = process.env.JWT_SECRET;
+// JWT secret key (you can store this in environment variables)
+const JWT_SECRET = process.env.JWT_SECRET || '9hDF$#U@#kdhf8734kJD!asf2@sdhg';
 
 export default async function login(req, res) {
-
-
-
 
     const { email, password } = req.body;
     if (!email) {
@@ -45,8 +41,8 @@ export default async function login(req, res) {
                 username: user.username,
                 email: user.email,
             },
-            JWT_SECRET,
-            { expiresIn: '1h' }
+            JWT_SECRET, // Secret key
+            { expiresIn: '1h' } // Token expiration (1 hour in this case)
         );
 
         // Optionally, return the token and user data
